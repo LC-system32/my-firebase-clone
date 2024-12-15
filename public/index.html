@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Read Data from PHP</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin: 20px auto;
+            width: 80%;
+            text-align: center;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Читання даних з файлу через PHP</h1>
+    <button onclick="fetchData()">Показати дані</button>
+    <div id="result"></div>
+
+    <script>
+        async function fetchData() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = "Завантаження...";
+
+            try {
+                // Запит на сервер
+                const response = await fetch('/api/data');
+                if (!response.ok) {
+                    throw new Error('Помилка завантаження даних');
+                }
+
+                // Отримання HTML-таблиці
+                const data = await response.text();
+                resultDiv.innerHTML = data;
+            } catch (error) {
+                console.error(error);
+                resultDiv.innerHTML = "<p>Помилка при отриманні даних</p>";
+            }
+        }
+    </script>
+</body>
+</html>
